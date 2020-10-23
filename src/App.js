@@ -1,9 +1,10 @@
 import React from 'react';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Main from './components/main/Main';
+import Main from './components/hoc/Main';
+import LoginForm from './components/form/LoginForm';
+import NoMatch from './components/404/NoMatch';
 import './App.css';
-
 
 const options = {
   dataIdFromObject: o => o.id
@@ -23,7 +24,12 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Route path="/" exact component={Main} />
+        <Main>
+          <Switch>
+            <Route path="/login" component={LoginForm} />
+            <Route path="*" component={NoMatch} />
+          </Switch>
+        </Main>
       </Router>
     </ApolloProvider>
   )
